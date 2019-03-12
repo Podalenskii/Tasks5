@@ -1,33 +1,42 @@
-<!DOCTYPE html>
-
+<?php
+error_reporting(-1);
+ini_set('display_errors', 'On');
+require ('connect.php');
+if (isset($_POST['name'])) {
+    $name = $_POST['name'];
+}
+if (isset($_POST['description'])) {
+    $name = $_POST['description'];
+}
+$userId = $_SESSION['logged_user_id'];
+$statement = $pdo->prepare("INSERT INTO posts (name,dascription,id_author) VALUES ('$name','$description', '$userId')")
+$statement->execute();
+if (isset($statement)){
+    $message = 'Статья успешно создана';
+    } else {
+        $message = 'Ну удалось создать статью';
+    }
+ ?>
+<!doctype html>
 <html lang="en">
-    <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    </head>
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>Create Post</h1>
-                    <form action="store.php" method="post">
-                        
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="title">
-                        </div>
-                         
-                        <div class="form-group">
-                            <textarea name="comment" class="form-control" ></textarea>
-                        </div>
-                        <div class="form-group">
-                            <textarea name="date" class="form-control" >мм/дд/гггг</textarea>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-success" type="submit">Submit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+    <div class="alert alert-info" role="alert">
+        <strong><?php echo $message?></strong>
+    </div>
+    <a href="index.php"><button type="button" class="btn btn-primary btn-lg">НАЗАД К СТАТЬЯМ</button></a>
+</div>
+</body>
 </html>
+
 
